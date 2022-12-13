@@ -2,9 +2,10 @@ import React from 'react';
 
 const Index = () => {
     return (
-        <div>
-            welcome to next js
-        </div>
+        <>
+            <h1 className="jumbotron text-center bg-primary square">Hello dennis</h1>
+            <p>from nest js ...</p>
+        </>
     );
 };
 
