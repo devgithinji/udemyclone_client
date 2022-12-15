@@ -1,5 +1,13 @@
 import {Menu} from "antd";
-import {AppstoreOutlined, LoginOutlined, UserAddOutlined, LogoutOutlined, CoffeeOutlined} from "@ant-design/icons"
+import {
+    AppstoreOutlined,
+    LoginOutlined,
+    UserAddOutlined,
+    LogoutOutlined,
+    CoffeeOutlined,
+    CarryOutOutlined,
+    TeamOutlined
+} from "@ant-design/icons"
 import {useRouter} from "next/router";
 import {useContext} from "react";
 import {Context} from "../context";
@@ -26,19 +34,32 @@ const TopNav = () => {
 
     return (
         <Menu mode="horizontal">
-            <Item key="1" icon={<AppstoreOutlined/>}>
+            <Item key="/" icon={<AppstoreOutlined/>}>
                 <Link href="/">
                     App
                 </Link>
             </Item>
+            {user && user.role && user.role.includes("instructor") ? (
+                <Item key="/instructor/course/create" icon={<CarryOutOutlined/>}>
+                    <Link href="/instructor/course/create">
+                        Create Course
+                    </Link>
+                </Item>
+            ) : (
+                <Item key="/user/become-instructor" icon={<TeamOutlined/>}>
+                    <Link href="/user/become-Instructor">
+                        Become Instructor
+                    </Link>
+                </Item>
+            )}
             {user == null && (
                 <>
-                    <Item key="2" icon={<LoginOutlined/>}>
+                    <Item key="/login" icon={<LoginOutlined/>}>
                         <Link href="/login">
                             Login
                         </Link>
                     </Item>
-                    <Item key="3" icon={<UserAddOutlined/>}>
+                    <Item key="/register" icon={<UserAddOutlined/>}>
                         <Link href="/register">
                             Register
                         </Link>
@@ -48,12 +69,20 @@ const TopNav = () => {
             {user !== null && (
                 <SubMenu key="10" icon={<CoffeeOutlined/>} title={user.name} style={{marginLeft: 'auto'}}>
                     <ItemGroup>
-                        <Item key="4">
-                           <Link href="/user" >
-                               Dashboard
-                           </Link>
+                        <Item key="/user">
+                            <Link href="/user">
+                                Dashboard
+                            </Link>
                         </Item>
-                        <Item onClick={logout} key="5" icon={<LogoutOutlined/>} className="float-right">
+                        {user && user.role && user.role.includes("instructor") && (
+                            <Item key="/instructor" style={{marginLeft: 'auto'}} icon={<TeamOutlined/>}>
+                                <Link href="/instructor">
+                                    Instructor
+                                </Link>
+                            </Item>
+
+                        )}
+                        <Item onClick={logout} key="logout" icon={<LogoutOutlined/>} className="float-right">
                             Logout
                         </Item>
                     </ItemGroup>

@@ -7,6 +7,7 @@ import {Context} from "../context";
 import {LOGIN} from "../context/actions";
 import {useRouter} from "next/router";
 
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -32,7 +33,7 @@ const Login = () => {
             //save in local storage
             localStorage.setItem("user", JSON.stringify(data))
             //router
-            router.push('/')
+            router.push('/user')
         } catch (e) {
             toast.error(e.response.data)
         }
